@@ -1,6 +1,6 @@
 # LinkedIn Notification Flows — v0.2.1
 
-This Chrome extension splits LinkedIn's 
+This **Chrome extension** splits LinkedIn's 
 Notifications page into custom flows (tabs) by person or organization. Create 
 your own groups — e.g. "Close Contacts", "Companies" — and see only 
 their notifications.
@@ -9,9 +9,20 @@ their notifications.
 Turkish**. It opens in English by default; use the **TR/ENG** button in the
 header to switch anytime — your choice is saved.
 
-**Privacy:** All settings are stored only in your own browser
+**Privacy & Security Notice:** All settings are stored only in your own browser
 (`chrome.storage.local`) and never sent anywhere. `content.js` makes no
 network requests (`fetch`/`XHR`) to any server at all.
+
+This extension is installed via Chrome's **"Load unpacked"** (developer
+mode), not the Chrome Web Store — meaning it does **not** go through
+Google's code review. Because of that:
+
+- **Only download from this repository** (the actual GitHub URL above).
+  Don't trust a "copy" of this extension shared somewhere else — the code
+  may have been modified.
+
+- The code is fully open and readable (`content.js`, a single file, not
+  minified) for anyone who wants to review it before installing.
 
 **Note:** This is not an official extension published or endorsed by
 LinkedIn; it's an independent personal tool. If LinkedIn changes its page
@@ -25,25 +36,6 @@ structure, the extension may temporarily stop working correctly.
 <img src="screenshots/Screenshot_English_Manage_Flows.png" width="700" alt="Manage Flows panel, in English"><br>
 <img src="screenshots/Screenshot_English_Tracked.png" width="700" alt="Tracked list with flow filters, in English">
 
-
-## ⚠️ Security notice
-This extension is installed via Chrome's **"Load unpacked"** (developer
-mode), not the Chrome Web Store — meaning it does **not** go through
-Google's code review. Because of that:
-
-- **Only download from this repository** (the actual GitHub URL above).
-  Don't trust a "copy" of this extension shared somewhere else — the code
-  may have been modified.
-- Once installed, it runs with your logged-in session on the matched
-  LinkedIn pages (`/notifications`, `/in/*`, `/company/*`). A version whose
-  source you haven't verified could, in theory, exfiltrate page data or take
-  actions on your behalf — this is a general risk of any "unpacked" browser
-  extension, independent of this specific code.
-- When you update (`git pull` or a new ZIP), it's worth checking that
-  `manifest.json`'s `permissions` / `host_permissions` haven't grown — right
-  now it only requests `storage` and access to `linkedin.com`.
-- The code is fully open and readable (`content.js`, a single file, not
-  minified) for anyone who wants to review it before installing.
 
 ## Installation
 1. Download this repository as a ZIP (green **Code → Download ZIP** button) and unzip it.
