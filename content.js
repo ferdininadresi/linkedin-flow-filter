@@ -37,19 +37,19 @@
   const STRINGS = {
     tr: {
       headerTitle: "Bildirim Akışları",
-      peopleBtnTitle: "Kişileri yönet",
+      peopleBtnTitle: "Takip edilenleri yönet",
       manageBtnTitle: "Grupları yönet",
       langBtnTitle: "Dil / Language",
-      helpText: "Bildirimdeki <b>＋</b> ile kişiyi ekle. Paylaşımı olmayan kişileri ise <b>⚙ → Kişi ekle</b> ile profil URL'si üzerinden ekleyebilirsin.",
+      helpText: "Bildirimdeki <b>＋</b> ile ekle. Henüz paylaşımı olmayan kişi/kurumları ise <b>⚙ → Kişi / kurum ekle</b> ile profil URL'si üzerinden ekleyebilirsin.",
       allTab: "Tümü",
       addToFlowTitle: "Bu kişiyi bildirim akışına ekle",
       pickerSub: "Bu kişiyi hangi akışlarda görmek istiyorsun?",
       saveBtn: "Kaydet",
-      peopleTitle: "Kişiler",
-      peopleSub: "İzleme listendeki tüm kişileri burada görebilir, akışlarını değiştirebilir veya silebilirsin.",
-      searchPlaceholder: "Kişi ara...",
-      noMatch: "Eşleşen kişi yok.",
-      emptyList: "Henüz izleme listesinde kişi yok.",
+      peopleTitle: "Takip Edilenler",
+      peopleSub: "İzleme listendeki tüm kişi ve kurumları burada görebilir, akışlarını değiştirebilir veya silebilirsin.",
+      searchPlaceholder: "Ara...",
+      noMatch: "Eşleşen sonuç yok.",
+      emptyList: "Henüz izleme listesinde kimse yok.",
       openProfile: "Profili aç ↗",
       editFlows: "Akışları düzenle",
       deleteBtn: "Sil",
@@ -82,19 +82,19 @@
     },
     en: {
       headerTitle: "Notification Flows",
-      peopleBtnTitle: "Manage people",
+      peopleBtnTitle: "Manage tracked list",
       manageBtnTitle: "Manage flows",
       langBtnTitle: "Dil / Language",
-      helpText: "Add a person with the <b>＋</b> on a notification. To add someone who hasn't posted yet, use <b>⚙ → Add person</b> with their profile URL.",
+      helpText: "Add someone from the <b>＋</b> on a notification. To add a person or organization that hasn't posted yet, use <b>⚙ → Add person/organization</b> with their profile URL.",
       allTab: "All",
       addToFlowTitle: "Add this person to a notification flow",
       pickerSub: "Which flows do you want to see this person in?",
       saveBtn: "Save",
-      peopleTitle: "People",
-      peopleSub: "See everyone on your watch list here, change their flows, or remove them.",
-      searchPlaceholder: "Search people...",
-      noMatch: "No matching people.",
-      emptyList: "No one on your watch list yet.",
+      peopleTitle: "Tracked",
+      peopleSub: "See everyone and every organization on your tracked list here, change their flows, or remove them.",
+      searchPlaceholder: "Search...",
+      noMatch: "No matching results.",
+      emptyList: "No one on your tracked list yet.",
       openProfile: "Open profile ↗",
       editFlows: "Edit flows",
       deleteBtn: "Remove",
@@ -326,7 +326,7 @@
         </div>
         <div class="li-flow-toolbar">
           <div class="li-flow-tabs"></div>
-          <button class="li-flow-people">👥</button>
+          <button class="li-flow-people">📋</button>
           <button class="li-flow-manage">⚙</button>
         </div>
       </div>
