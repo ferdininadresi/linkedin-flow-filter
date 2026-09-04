@@ -1,4 +1,4 @@
-# LinkedIn Notification Flows — v0.2.1
+# LinkedIn Flow Filter — v0.2.1
 
 This **Chrome extension** splits LinkedIn's 
 Notifications page into custom flows (tabs) by person or organization. Create 
