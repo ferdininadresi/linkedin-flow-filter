@@ -23,7 +23,7 @@ structure, the extension may temporarily stop working correctly.
 
 <img src="screenshots/Screenshot_English_Mainpage.png" width="700" alt="Main notifications view with flow tabs, in English"><br>
 <img src="screenshots/Screenshot_English_Manage_Flows.png" width="700" alt="Manage Flows panel, in English"><br>
-<img src="screenshots/Screenshot_English_People.png" width="700" alt="People list with flow filters, in English">
+<img src="screenshots/Screenshot_English_Tracked.png" width="700" alt="Tracked list with flow filters, in English">
 
 
 ## ⚠️ Security notice
