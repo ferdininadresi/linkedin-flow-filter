@@ -44,6 +44,7 @@ structure, the extension may temporarily stop working correctly.
 3. Turn on **Developer mode** (top right).
 4. Click **Load unpacked**, select the unzipped folder.
 5. Refresh the LinkedIn Notifications page (linkedin.com/notifications).
+6. If the extension doesn't appear when you click "Notifications," fully refresh the page.
 
 (Works the same way on other Chromium-based browsers — Edge, Brave, Opera.)
 
@@ -76,6 +77,22 @@ switches, signing out of Chrome, reloading from a different folder, etc.).
 Use **⚙ → 💾 Export** to download all your flows/people as a JSON file, and
 **📂 Import** to load it back into the same or another browser. We recommend
 taking a backup after any significant changes.
+
+## Known Issues
+
+- **Panel disappearing after clicking into a notification:** On some accounts,
+  clicking a notification card and then navigating back to "Notifications"
+  (via the top nav icon) can cause the panel to briefly disappear or reset to
+  "All." Two reliable workarounds:
+  - Use your browser's **Back** button instead of clicking the
+    "Notifications" icon again — this preserves the page state and keeps the
+    panel in place.
+  - Open notifications in a **new tab** (right-click a card → "Open link in
+    new tab", or Cmd/Ctrl+click) instead of navigating away — the original
+    Notifications tab, with the panel and your selected flow, stays
+    untouched in the background.
+- If the panel still doesn't reappear, a full page refresh (F5 / Cmd+R)
+  reliably fixes it.
 
 ## Technical note
 The extension locates notification cards using the
