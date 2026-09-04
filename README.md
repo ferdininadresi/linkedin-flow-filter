@@ -31,6 +31,7 @@ structure, the extension may temporarily stop working correctly.
 ## Screenshots
 
 **English**
+(for Turkish screenshots, visit "screenshots" folder)
 
 <img src="screenshots/Screenshot_English_Mainpage.png" width="700" alt="Main notifications view with flow tabs, in English"><br>
 <img src="screenshots/Screenshot_English_Manage_Flows.png" width="700" alt="Manage Flows panel, in English"><br>
