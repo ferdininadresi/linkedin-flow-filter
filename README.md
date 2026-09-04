@@ -16,6 +16,20 @@ network requests (`fetch`/`XHR`) to any server at all.
 LinkedIn; it's an independent personal tool. If LinkedIn changes its page
 structure, the extension may temporarily stop working correctly.
 
+## Screenshots
+
+**English**
+
+<img src="Screenshot_English_Mainpage.png" width="700" alt="Main notifications view with flow tabs, in English"><br>
+<img src="Screenshot_English_Manage_Flows.png" width="700" alt="Manage Flows panel, in English"><br>
+<img src="Screenshot_English_People.png" width="700" alt="People list with flow filters, in English">
+
+**Türkçe**
+
+<img src="Screenshot_Turkish_Main.png" width="700" alt="Ana bildirim görünümü, akış sekmeleriyle, Türkçe"><br>
+<img src="Screenshot_Turkish_Manage_Flows.png" width="700" alt="Akışları yönet paneli, Türkçe"><br>
+<img src="Screenshot_Turkish_People.png" width="700" alt="Akış filtreli kişiler listesi, Türkçe">
+
 ## ⚠️ Security notice
 This extension is installed via Chrome's **"Load unpacked"** (developer
 mode), not the Chrome Web Store — meaning it does **not** go through

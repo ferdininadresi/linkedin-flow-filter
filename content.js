@@ -65,6 +65,8 @@
       importBtn: "📂 İçe aktar",
       personCount: n => `${n} kişi`,
       deleteFlowBtn: "Sil",
+      renameBtn: "Yeniden adlandır",
+      renamePrompt: "Bu akış için yeni isim:",
       deleteFlowConfirm: name => `"${name}" akışını silmek istiyor musun?`,
       personFieldsRequired: "Kişi/kurum adı ve LinkedIn profil veya şirket sayfası URL'si gerekli.",
       invalidUrl: "Geçerli bir LinkedIn profil veya şirket sayfası URL'si gir. Örn: https://www.linkedin.com/in/kullaniciadi/ veya https://www.linkedin.com/company/sirket-adi/",
@@ -108,6 +110,8 @@
       importBtn: "📂 Import",
       personCount: n => `${n} ${n === 1 ? "person" : "people"}`,
       deleteFlowBtn: "Delete",
+      renameBtn: "Rename",
+      renamePrompt: "New name for this flow:",
       deleteFlowConfirm: name => `Delete the "${name}" flow?`,
       personFieldsRequired: "Person/organization name and a LinkedIn profile or company page URL are required.",
       invalidUrl: "Enter a valid LinkedIn profile or company page URL. E.g. https://www.linkedin.com/in/username/ or https://www.linkedin.com/company/company-name/",
@@ -573,9 +577,27 @@
       row.className = "li-flow-manager-row";
       row.innerHTML = `
         <span><b>${escapeHtml(g.name)}</b> <small>${t("personCount", Object.keys(g.members || {}).length)}</small></span>
-        <button data-delete="${escapeAttr(g.name)}">${t("deleteFlowBtn")}</button>
+        <div class="li-flow-manager-row-actions">
+          <button class="li-flow-rename-btn" title="${escapeAttr(t("renameBtn"))}">✏️</button>
+          <button class="li-flow-delete-btn" data-delete="${escapeAttr(g.name)}">${t("deleteFlowBtn")}</button>
+        </div>
       `;
-      row.querySelector("button").onclick = () => {
+      row.querySelector(".li-flow-rename-btn").onclick = () => {
+        const newName = prompt(t("renamePrompt"), g.name);
+        if (newName == null) return;
+        const n = clean(newName);
+        if (!n || n === g.name) return;
+        if (state.groups[n]) return alert(t("flowNameExists"));
+        const reordered = {};
+        Object.values(state.groups).forEach(og => {
+          if (og.name === g.name) reordered[n] = { ...og, name: n };
+          else reordered[og.name] = og;
+        });
+        state.groups = reordered;
+        if (state.active === g.name) state.active = n;
+        save(); renderTabs(); applyFilter(); openManager();
+      };
+      row.querySelector(".li-flow-delete-btn").onclick = () => {
         if (confirm(t("deleteFlowConfirm", g.name))) {
           delete state.groups[g.name];
           if (state.active === g.name) state.active = "__all__";

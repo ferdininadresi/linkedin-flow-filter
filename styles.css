@@ -115,9 +115,11 @@
   border-bottom:1px solid #eee;
 }
 .li-flow-manager-row small { color:#777; margin-left:6px; }
+.li-flow-manager-row-actions { display:flex; align-items:center; gap:10px; }
 .li-flow-manager-row button {
   border:0; background:transparent; color:#b00020; cursor:pointer; font-weight:600;
 }
+.li-flow-rename-btn { color:#333; font-weight:400; font-size:14px; }
 .li-flow-manager-add { display:flex; gap:8px; margin-top:14px; }
 .li-flow-manager-add input {
   flex:1; border:1px solid #bbb; border-radius:7px; padding:9px;
