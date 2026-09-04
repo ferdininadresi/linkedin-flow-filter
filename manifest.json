@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Bildirim Akışları",
+  "version": "0.3.0",
+  "description": "LinkedIn bildirimlerini kişi bazında özel akışlara ayırır. Veriler yalnızca Chrome storage.local içinde tutulur.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.linkedin.com/notifications/*",
+        "https://www.linkedin.com/notifications",
+        "https://www.linkedin.com/in/*",
+        "https://www.linkedin.com/company/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "LinkedIn Bildirim Akışları"
+  }
+}

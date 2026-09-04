@@ -1,0 +1,166 @@
+
+#li-notif-flows-root {
+  margin: 0 auto 12px auto;
+  max-width: 556px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  z-index: 20;
+}
+#li-notif-flows-root .li-flow-header {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:9px 10px;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+}
+.li-flow-title-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.li-flow-title { font-weight:700; font-size:14px; }
+.li-flow-toolbar { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+.li-flow-tabs { display:flex; gap:5px; flex-wrap:wrap; }
+.li-flow-tab,.li-flow-manage,.li-flow-people,.li-flow-lang {
+  border:1px solid #c8c8c8;
+  background:#fff;
+  color:#333;
+  border-radius:18px;
+  padding:6px 11px;
+  font-weight:600;
+  cursor:pointer;
+  font-size:12px;
+  white-space:nowrap;
+}
+.li-flow-tab.active { background:#057642; color:#fff; border-color:#057642; }
+.li-flow-manage,.li-flow-people { padding:6px 9px; flex-shrink:0; }
+.li-flow-lang { color:#0a66c2; border-color:#0a66c2; font-weight:700; }
+.li-flow-lang:hover { background:#eef7ff; }
+.li-flow-help {
+  font-size:11px;
+  color:#666;
+  padding:6px 4px 0;
+}
+.li-flow-hidden { display:none !important; }
+
+.nt-card { position:relative; }
+.li-flow-star {
+  position:absolute;
+  right:48px;
+  top:11px;
+  width:28px;
+  height:28px;
+  border:1px solid #bbb;
+  background:#fff;
+  color:#0a66c2;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:19px;
+  line-height:25px;
+  z-index:5;
+  opacity:.82;
+}
+.li-flow-star:hover { opacity:1; background:#eef7ff; }
+
+.li-flow-modal-backdrop {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.42);
+  z-index:2147483647;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.li-flow-modal {
+  width:min(430px,94vw);
+  max-height:80vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 20px 70px rgba(0,0,0,.3);
+  padding:18px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+.li-flow-modal-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:16px;
+  margin-bottom:8px;
+}
+.li-flow-close {
+  border:0;
+  background:transparent;
+  font-size:26px;
+  cursor:pointer;
+  color:#555;
+}
+.li-flow-modal-sub { color:#666; font-size:13px; margin-bottom:14px; }
+.li-flow-check { display:flex; align-items:center; gap:9px; padding:9px 4px; cursor:pointer; }
+.li-flow-check input { width:17px; height:17px; }
+.li-flow-modal-actions { margin-top:14px; text-align:right; }
+.li-flow-primary {
+  background:#0a66c2;
+  color:#fff;
+  border:0;
+  border-radius:18px;
+  padding:8px 16px;
+  font-weight:700;
+  cursor:pointer;
+}
+.li-flow-manager-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 2px;
+  border-bottom:1px solid #eee;
+}
+.li-flow-manager-row small { color:#777; margin-left:6px; }
+.li-flow-manager-row button {
+  border:0; background:transparent; color:#b00020; cursor:pointer; font-weight:600;
+}
+.li-flow-manager-add { display:flex; gap:8px; margin-top:14px; }
+.li-flow-manager-add input {
+  flex:1; border:1px solid #bbb; border-radius:7px; padding:9px;
+}
+.li-flow-danger { margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.li-flow-export, .li-flow-import {
+  border:1px solid #0a66c2; color:#0a66c2; background:#fff;
+  border-radius:7px; padding:7px 10px; cursor:pointer; font-weight:600;
+}
+.li-flow-export:hover, .li-flow-import:hover { background:#eef7ff; }
+
+.li-flow-person-add { margin-top:16px; padding-top:14px; border-top:1px solid #eee; }
+.li-flow-person-row { display:flex; gap:8px; margin-top:8px; }
+.li-flow-person-row input, .li-flow-person-row select { flex:1; min-width:0; border:1px solid #bbb; border-radius:7px; padding:9px; background:#fff; }
+.li-flow-person-add small { display:block; color:#777; font-size:11px; margin-top:7px; line-height:1.4; }
+.li-flow-profile-add { position:fixed; right:24px; bottom:130px; z-index:2147483646; border:0; border-radius:22px; padding:11px 16px; background:#0a66c2; color:#fff; font-weight:700; box-shadow:0 5px 20px rgba(0,0,0,.25); cursor:pointer; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; }
+.li-flow-profile-add:hover { filter:brightness(.94); }
+
+.li-flow-people-manager { width:min(720px,94vw); }
+.li-flow-people-filters { display:flex; gap:5px; flex-wrap:wrap; margin:4px 0 10px; }
+.li-flow-people-search {
+  width:100%; box-sizing:border-box; border:1px solid #bbb; border-radius:8px;
+  padding:10px 12px; margin:4px 0 12px; font-size:14px;
+}
+.li-flow-person-card {
+  display:flex; justify-content:space-between; gap:16px; align-items:center;
+  padding:12px 2px; border-bottom:1px solid #eee;
+}
+.li-flow-person-main { min-width:0; }
+.li-flow-person-name-display { font-weight:700; font-size:14px; }
+.li-flow-person-groups { display:flex; flex-wrap:wrap; gap:5px; margin:6px 0 4px; }
+.li-flow-person-groups span {
+  background:#eef3f8; border-radius:12px; padding:3px 8px; font-size:11px; color:#405060;
+}
+.li-flow-person-link { color:#0a66c2; font-size:11px; text-decoration:none; }
+.li-flow-person-actions { display:flex; gap:6px; flex-shrink:0; }
+.li-flow-secondary,.li-flow-delete-person {
+  border:1px solid #bbb; background:#fff; border-radius:16px; padding:7px 10px;
+  cursor:pointer; font-weight:600; font-size:11px;
+}
+.li-flow-delete-person { color:#b00020; border-color:#e0b0b8; }
+.li-flow-empty { padding:24px 4px; color:#777; text-align:center; }
+@media (max-width:650px) {
+  .li-flow-person-card { align-items:flex-start; flex-direction:column; }
+  .li-flow-person-actions { width:100%; }
+}
