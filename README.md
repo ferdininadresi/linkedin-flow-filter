@@ -1,28 +1,16 @@
-# LinkedIn Flow Filter — v0.2.1
+# LinkedIn Notification Flows — v0.3.0
 
-This **Chrome extension** splits LinkedIn's 
-Notifications page into custom flows (tabs) by person or organization. Create 
-your own groups — e.g. "Close Contacts", "Companies" — and see only 
-their notifications.
+This Chrome extension splits LinkedIn's Notifications page into custom flows
+(tabs) by person or organization. Create your own groups — e.g. "Close
+Contacts", "Companies I Follow" — and see only their notifications.
 
 **Language:** The panel's own interface is available in **both English and
 Turkish**. It opens in English by default; use the **TR/ENG** button in the
 header to switch anytime — your choice is saved.
 
-**Privacy & Security Notice:** All settings are stored only in your own browser
+**Privacy:** All settings are stored only in your own browser
 (`chrome.storage.local`) and never sent anywhere. `content.js` makes no
 network requests (`fetch`/`XHR`) to any server at all.
-
-This extension is installed via Chrome's **"Load unpacked"** (developer
-mode), not the Chrome Web Store — meaning it does **not** go through
-Google's code review. Because of that:
-
-- **Only download from this repository** (the actual GitHub URL above).
-  Don't trust a "copy" of this extension shared somewhere else — the code
-  may have been modified.
-
-- The code is fully open and readable (`content.js`, a single file, not
-  minified) for anyone who wants to review it before installing.
 
 **Note:** This is not an official extension published or endorsed by
 LinkedIn; it's an independent personal tool. If LinkedIn changes its page
@@ -31,12 +19,35 @@ structure, the extension may temporarily stop working correctly.
 ## Screenshots
 
 **English**
-(for Turkish screenshots, visit "screenshots" folder)
 
 <img src="screenshots/Screenshot_English_Mainpage.png" width="700" alt="Main notifications view with flow tabs, in English"><br>
 <img src="screenshots/Screenshot_English_Manage_Flows.png" width="700" alt="Manage Flows panel, in English"><br>
-<img src="screenshots/Screenshot_English_Tracked.png" width="700" alt="Tracked list with flow filters, in English">
+<img src="screenshots/Screenshot_English_People.png" width="700" alt="People list with flow filters, in English">
 
+**Türkçe**
+
+<img src="screenshots/Screenshot_Turkish_Main.png" width="700" alt="Ana bildirim görünümü, akış sekmeleriyle, Türkçe"><br>
+<img src="screenshots/Screenshot_Turkish_Manage_Flows.png" width="700" alt="Akışları yönet paneli, Türkçe"><br>
+<img src="screenshots/Screenshot_Turkish_People.png" width="700" alt="Akış filtreli kişiler listesi, Türkçe">
+
+## ⚠️ Security notice
+This extension is installed via Chrome's **"Load unpacked"** (developer
+mode), not the Chrome Web Store — meaning it does **not** go through
+Google's code review. Because of that:
+
+- **Only download from this repository** (the actual GitHub URL above).
+  Don't trust a "copy" of this extension shared somewhere else — the code
+  may have been modified.
+- Once installed, it runs with your logged-in session on the matched
+  LinkedIn pages (`/notifications`, `/in/*`, `/company/*`). A version whose
+  source you haven't verified could, in theory, exfiltrate page data or take
+  actions on your behalf — this is a general risk of any "unpacked" browser
+  extension, independent of this specific code.
+- When you update (`git pull` or a new ZIP), it's worth checking that
+  `manifest.json`'s `permissions` / `host_permissions` haven't grown — right
+  now it only requests `storage` and access to `linkedin.com`.
+- The code is fully open and readable (`content.js`, a single file, not
+  minified) for anyone who wants to review it before installing.
 
 ## Installation
 1. Download this repository as a ZIP (green **Code → Download ZIP** button) and unzip it.
@@ -44,7 +55,6 @@ structure, the extension may temporarily stop working correctly.
 3. Turn on **Developer mode** (top right).
 4. Click **Load unpacked**, select the unzipped folder.
 5. Refresh the LinkedIn Notifications page (linkedin.com/notifications).
-6. If the extension doesn't appear when you click "Notifications," fully refresh the page.
 
 (Works the same way on other Chromium-based browsers — Edge, Brave, Opera.)
 
@@ -71,28 +81,27 @@ Note: if LinkedIn hasn't generated any notification about that person/org
 yet, there's no card to filter — once one appears in the future, it will
 automatically show up in the right flow.
 
+**Organizations, specifically:** LinkedIn references a company by an internal
+numeric ID in notifications (e.g. `/company/8970`) rather than its public
+vanity URL (`/company/tubitak`), and that numeric ID isn't available on the
+company's own page until LinkedIn loads it via a background API call — this
+extension makes no network requests, so it can't resolve that ID in advance.
+In practice this means:
+- ✅ Adding an organization from its **notification card's ⊕ button** (once
+  it has at least one notification) always works correctly.
+- ❌ Adding an organization by its page URL (via ⚙ or the "＋ Add to
+  Notification Flow" button on its page) **before** it has ever appeared in
+  a notification is not reliable — the stored URL-based key generally won't
+  match the numeric ID LinkedIn later uses in the actual notification.
+- People (`/in/...`) don't have this issue; their URL is always consistent
+  between their profile and their notification cards.
+
 ## Backup (Export/Import)
 Extension data is tied to your browser profile, so it can be lost (profile
 switches, signing out of Chrome, reloading from a different folder, etc.).
 Use **⚙ → 💾 Export** to download all your flows/people as a JSON file, and
 **📂 Import** to load it back into the same or another browser. We recommend
 taking a backup after any significant changes.
-
-## Known Issues
-
-- **Panel disappearing after clicking into a notification:** On some accounts,
-  clicking a notification card and then navigating back to "Notifications"
-  (via the top nav icon) can cause the panel to briefly disappear or reset to
-  "All." Two reliable workarounds:
-  - Use your browser's **Back** button instead of clicking the
-    "Notifications" icon again — this preserves the page state and keeps the
-    panel in place.
-  - Open notifications in a **new tab** (right-click a card → "Open link in
-    new tab", or Cmd/Ctrl+click) instead of navigating away — the original
-    Notifications tab, with the panel and your selected flow, stays
-    untouched in the background.
-- If the panel still doesn't reappear, a full page refresh (F5 / Cmd+R)
-  reliably fixes it.
 
 ## Technical note
 The extension locates notification cards using the

@@ -1,8 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "LinkedIn Bildirim Akışları",
+  "name": "LinkedIn Notification Flows",
   "version": "0.3.0",
-  "description": "LinkedIn bildirimlerini kişi bazında özel akışlara ayırır. Veriler yalnızca Chrome storage.local içinde tutulur.",
+  "description": "Split LinkedIn notifications into custom flows by person or organization. All data stays local (chrome.storage.local) — nothing is ever sent anywhere. Interface available in English and Turkish.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": [
     "storage"
   ],
@@ -27,6 +32,11 @@
     }
   ],
   "action": {
-    "default_title": "LinkedIn Bildirim Akışları"
+    "default_title": "LinkedIn Notification Flows",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
   }
 }

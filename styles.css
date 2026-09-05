@@ -96,7 +96,21 @@
 }
 .li-flow-modal-sub { color:#666; font-size:13px; margin-bottom:14px; }
 .li-flow-check { display:flex; align-items:center; gap:9px; padding:9px 4px; cursor:pointer; }
-.li-flow-check input { width:17px; height:17px; }
+.li-flow-check input[type="checkbox"] {
+  all: revert;
+  -webkit-appearance: checkbox;
+  appearance: checkbox;
+  width: 17px;
+  height: 17px;
+  min-width: 17px;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: static !important;
+  display: inline-block !important;
+  margin: 0;
+  accent-color: #0a66c2;
+  cursor: pointer;
+}
 .li-flow-modal-actions { margin-top:14px; text-align:right; }
 .li-flow-primary {
   background:#0a66c2;

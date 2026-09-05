@@ -59,7 +59,7 @@
       personNamePlaceholder: "Kişi/kurum adı (örn. Ahmet Yılmaz)",
       personUrlPlaceholder: "LinkedIn profil veya şirket sayfası URL'si",
       addBtn: "Ekle",
-      personAddHelp: "Profil URL'sini kişinin LinkedIn profilinden ya da kurumun şirket sayfasından (https://www.linkedin.com/in/... veya .../company/...) kopyalayabilirsin. Henüz hiç paylaşım yapmamış olsa da akışa eklenir.",
+      personAddHelp: "Profil URL'si kişiler için sorunsuz çalışır (paylaşımı olmasa bile eklenebilir). <b>Kurumlar için:</b> URL ile ekleme, kurum henüz hiç paylaşım yapmadıysa güvenilir eşleşmiyor — LinkedIn bildirimlerde kurumu adres yerine dahili bir numarayla eşliyor. Kurumları en garantili şekilde eklemek için, o kurumun bir bildirimi geldiğinde <b>⊕</b> ile eklemeyi bekle.",
       newFlowPlaceholder: "Yeni akış adı",
       exportBtn: "💾 Dışa aktar (yedek)",
       importBtn: "📂 İçe aktar",
@@ -104,7 +104,7 @@
       personNamePlaceholder: "Person/organization name (e.g. John Smith)",
       personUrlPlaceholder: "LinkedIn profile or company page URL",
       addBtn: "Add",
-      personAddHelp: "You can copy the profile URL from the person's LinkedIn profile or the organization's company page (https://www.linkedin.com/in/... or .../company/...). They'll be added even if they haven't posted anything yet.",
+      personAddHelp: "Adding by profile URL works reliably for people (even if they haven't posted). <b>For organizations:</b> URL-based adding isn't reliable until they've posted at least once — LinkedIn references organizations by an internal ID rather than their page URL in notifications. The reliable way: wait for that organization's first notification, then add them using the <b>⊕</b> on that card.",
       newFlowPlaceholder: "New flow name",
       exportBtn: "💾 Export (backup)",
       importBtn: "📂 Import",
@@ -163,7 +163,16 @@
     return "https://www.linkedin.com/" + type + "/" + slug;
   }
 
+  // True once the extension's own context is torn down (e.g. reloaded via
+  // chrome://extensions while this page was already open). After that,
+  // chrome.* calls throw/fail repeatedly — check this first and bail
+  // quietly instead of spamming the console forever.
+  function extValid() {
+    try { return !!(chrome.runtime && chrome.runtime.id); } catch { return false; }
+  }
+
   function load() {
+    if (!extValid()) { console.warn("[LiFlows] Extension was reloaded — please refresh this page to reconnect."); return; }
     chrome.storage.local.get([STORE_KEY], data => {
       const saved = data[STORE_KEY] || {};
       state.groups = Object.keys(saved.groups || {}).length ? saved.groups : structuredClone(DEFAULT_GROUPS);
@@ -195,6 +204,7 @@
   }
 
   function save() {
+    if (!extValid()) { console.warn("[LiFlows] Extension was reloaded — changes not saved. Please refresh this page."); return; }
     chrome.storage.local.set({
       [STORE_KEY]: { groups: state.groups, active: state.active, lang: state.lang }
     });
@@ -220,7 +230,7 @@
     const links = [...card.querySelectorAll('a[href]')];
     const preferred = links.find(a => {
       const h = a.getAttribute("href") || "";
-      return /\/in\//.test(h);
+      return /\/(in|company)\//.test(h);
     });
     if (preferred) {
       const href = canonicalProfileHref(preferred.href) ||
@@ -298,6 +308,7 @@
     if (!document.body) return;
     if (document.getElementById(ROOT_ID)) return;
     if (shellBuilding) return;
+    if (!extValid()) { console.warn("[LiFlows] Extension was reloaded — please refresh this page to reconnect."); return; }
     shellBuilding = true;
 
     // Always re-sync the active tab from storage right before (re)building
@@ -416,12 +427,15 @@
       label.innerHTML = `<input type="checkbox" data-group="${escapeAttr(g.name)}"> <span>${escapeHtml(g.name)}</span>`;
       const cb = label.querySelector("input");
       cb.checked = !!g.members[actor.key];
+      cb.addEventListener("change", () => console.log("[LiFlows debug] checkbox changed:", g.name, "->", cb.checked));
       checks.appendChild(label);
     });
 
     modal.querySelector(".li-flow-primary").onclick = () => {
+      console.log("[LiFlows debug] Save clicked for actor:", actor.name, actor.key);
       Object.values(state.groups).forEach(g => {
         const cb = checks.querySelector(`input[data-group="${cssEscape(g.name)}"]`);
+        console.log("[LiFlows debug]  ", g.name, "checked=", cb?.checked);
         if (cb?.checked) g.members[actor.key] = actor;
         else delete g.members[actor.key];
       });
@@ -548,6 +562,10 @@
         <button class="li-flow-close">×</button>
       </div>
       <div class="li-flow-manager-list"></div>
+      <div class="li-flow-manager-add">
+        <input placeholder="${escapeAttr(t("newFlowPlaceholder"))}">
+        <button class="li-flow-primary">${t("addBtn")}</button>
+      </div>
       <div class="li-flow-person-add">
         <b>${t("addPersonTitle")}</b>
         <div class="li-flow-person-row">
@@ -559,10 +577,6 @@
           <button class="li-flow-primary li-flow-add-person">${t("addBtn")}</button>
         </div>
         <small>${t("personAddHelp")}</small>
-      </div>
-      <div class="li-flow-manager-add">
-        <input placeholder="${escapeAttr(t("newFlowPlaceholder"))}">
-        <button class="li-flow-primary">${t("addBtn")}</button>
       </div>
       <div class="li-flow-danger">
         <button class="li-flow-export">${t("exportBtn")}</button>
@@ -782,6 +796,12 @@
 
   function scan() {
     if (!state.ready) return;
+    if (!extValid()) {
+      console.warn("[LiFlows] Extension context invalidated — stopping background checks. Please refresh this page.");
+      clearInterval(pathWatcher);
+      state.observer?.disconnect();
+      return;
+    }
     renderShell();
     applyFilter();
     addProfileButton();
@@ -799,7 +819,12 @@
 
   // SPA navigation: LinkedIn changes content without a full reload.
   let lastPath = location.pathname;
-  setInterval(() => {
+  const pathWatcher = setInterval(() => {
+    if (!extValid()) {
+      clearInterval(pathWatcher);
+      state.observer?.disconnect();
+      return;
+    }
     if (location.pathname !== lastPath) {
       lastPath = location.pathname;
       if (location.pathname.startsWith("/notifications")) {
@@ -811,5 +836,28 @@
   load();
   startObserver();
 
-  window.__liFlowsInstance = { rescan: scan };
+  window.__liFlowsInstance = {
+    rescan: scan,
+    // Temporary console-only debug helpers (no UI). Open DevTools console on
+    // the Notifications page and call:
+    //   window.__liFlowsInstance.dumpKeys()   -> compares card keys vs saved member keys
+    dumpKeys() {
+      const cardRows = getCards().map(card => {
+        const actor = actorFromCard(card);
+        const matched = actor
+          ? Object.values(state.groups).filter(g => g.members?.[actor.key]).map(g => g.name)
+          : [];
+        return { name: actor?.name || "(none)", key: actor?.key || "(none)", matchedFlows: matched.join(", ") || "-" };
+      });
+      const memberRows = [];
+      Object.values(state.groups).forEach(g => {
+        Object.values(g.members || {}).forEach(m => memberRows.push({ flow: g.name, name: m.name, key: m.key }));
+      });
+      console.log("=== CARDS ON PAGE ===");
+      console.table(cardRows);
+      console.log("=== SAVED MEMBERS ===");
+      console.table(memberRows);
+      return { cardRows, memberRows };
+    }
+  };
 })();
